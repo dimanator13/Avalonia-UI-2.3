@@ -8,13 +8,16 @@ namespace Task_3.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly UserProfile _userProfile = new();
-    private string _resultText = "";
+    private readonly UserProfile _userProfile = new(); // Creating user
+    private string _resultText = ""; // Text for result
+    
+    // Initialize links for methods
     public ICommand CreateGreetingCommand { get; }
     public ICommand ClearCommand { get; }
     public ICommand AboutCommand { get; }
     public ICommand ExitCommand { get; }
     
+    // Install methods with RelayCommand
     public MainWindowViewModel()
     {
         CreateGreetingCommand = new RelayCommand(CreateGreeting);
@@ -47,12 +50,11 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 return;
             }
-
             _userProfile.Profession = value;
             OnPropertyChanged();
         }
     }
-
+    
     public string FavoriteFramework
     {
         get => _userProfile.FavoriteFramework;
@@ -62,31 +64,36 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 return;
             }
-
             _userProfile.FavoriteFramework = value;
             OnPropertyChanged();
         }
     }
-
-    public string ResultText
+    
+    public string ResultText 
     {
         get => _resultText;
         set => SetProperty(ref _resultText, value);
     }
 
+    // Make a result (Greeting)
     public void CreateGreeting()
     {
         var name = string.IsNullOrWhiteSpace(Name)
-            ? "пользователь"
+            ? "User"
             : Name;
 
         var framework = string.IsNullOrWhiteSpace(FavoriteFramework)
             ? "Avalonia"
             : FavoriteFramework;
+        
+        var profession  = string.IsNullOrWhiteSpace(Profession)
+            ? "Avalonia"
+            : Profession;
 
-        ResultText = $"Привет, {name}! Ты изучаешь {framework}.";
+        ResultText = $"Hi, {name}! You study {framework}.\nYour profession: {profession}.";
     }
-
+    
+    // Clear data
     public void Clear()
     {
         Name = "";
@@ -94,12 +101,14 @@ public partial class MainWindowViewModel : ViewModelBase
         FavoriteFramework = "Avalonia";
         ResultText = "";
     }
-
+    
+    // About text
     public void About()
     {
-        ResultText = "Hello Avalonia App\nУчебное приложение на Avalonia UI.";
+        ResultText = "Hello Avalonia App\nLearning application on Avalonia UI.";
     }
-
+    
+    // Exit method
     public void Exit()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
