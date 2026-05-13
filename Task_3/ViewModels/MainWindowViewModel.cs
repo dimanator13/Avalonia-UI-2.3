@@ -87,7 +87,7 @@ public partial class MainWindowViewModel : ViewModelBase
             : FavoriteFramework;
         
         var profession  = string.IsNullOrWhiteSpace(Profession)
-            ? "Avalonia"
+            ? "None"
             : Profession;
 
         ResultText = $"Hi, {name}! You study {framework}.\nYour profession: {profession}.";
